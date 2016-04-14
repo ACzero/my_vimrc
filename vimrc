@@ -13,8 +13,12 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Shougo/neocomplcache'
 
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
+Plugin 'mileszs/ack.vim'
+
+Plugin 'tpope/vim-fugitive'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -39,6 +43,13 @@ set title
 
 set autoindent
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=80
+
+" my custom key-mappings
+map <S-j> 10j
+map <S-k> 10k
+
+map <F9> :tabp<Enter>
+map <F10> :tabn<Enter>
 
 " neocompletecache
 
@@ -76,6 +87,10 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
 
-" NERDTree
-map <C-n> :NERDTreeToggle<CR> 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif  " close vim if the only window left open is a NERDTree
+" NERDTreeTabs
+
+map <C-n> :NERDTreeTabsToggle<CR> 
+
+" vim-fugitive
+
+autocmd QuickFixCmdPost *grep* cwindow
