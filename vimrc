@@ -44,12 +44,13 @@ set title
 set autoindent
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=80
 
+set backspace=indent,eol,start
 " my custom key-mappings
 map <S-j> 10j
 map <S-k> 10k
 
-map <F9> :tabp<Enter>
-map <F10> :tabn<Enter>
+map <S-h> :tabp<Enter>
+map <S-l> :tabn<Enter>
 
 " neocompletecache
 
