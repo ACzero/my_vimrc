@@ -13,8 +13,10 @@ set noswapfile
 set hidden
 
 " hightlight column and line
-set cursorline
-"set cursorcolumn
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
+
 filetype plugin indent on
 syntax on
 
@@ -163,6 +165,10 @@ set laststatus=2
 " tComment
 Plugin 'vim-scripts/tComment'
 
+" ack
+Plugin 'mileszs/ack.vim'
+
+map <leader>f :Ack
 " tagbar
 " Plugin 'majutsushi/tagbar'
 
