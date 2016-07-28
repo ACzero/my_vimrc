@@ -155,4 +155,19 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
+" vim-powerline
+Plugin 'Lokaltog/vim-powerline'
+
+set laststatus=2
+
+" tComment
+Plugin 'vim-scripts/tComment'
+
+" tagbar
+" Plugin 'majutsushi/tagbar'
+
+" let g:tagbar_width=35
+" let g:tagbar_autofocus=1
+" nmap <F9> :TagbarToggle<CR>
+
 call vundle#end()
