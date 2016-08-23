@@ -1,4 +1,4 @@
-set nocompatible               " be iMproved
+set nocompatible
 
 " 1 tab to 2 space for ruby
 set tabstop=2
@@ -32,6 +32,21 @@ colorscheme molokai
 autocmd BufWritePre * :%s/\s\+$//e
 
 set rtp+=~/.vim/bundle/Vundle.vim
+
+let mapleader= ","
+" custom keymapping
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+map <leader>l :call NumberToggle()<cr>
+map <leader>m ]m
+map <leader>n [m
+
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -49,57 +64,61 @@ if has("gui_running")
   set shell=/bin/bash
 endif
 
-let mapleader= ","
 " EasyMotion_leader_key .
+"
 " Plugin Plugin here for Ruby on Rails
 " git
 Plugin 'tpope/vim-fugitive'
+
 " ruby command for rvm
 Plugin 'tpope/vim-rvm'
+
 " quickly move cursor, try ,,w
 Plugin 'Lokaltog/vim-easymotion'
 " quickly write HTML, just like zencoding but simple engough
 "Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 "let g:sparkupNextMapping= "<c-m>"
+
 Plugin 'mattn/emmet-vim'
 let g:user_emmet_install_global = 0
 let g:user_emmet_mode='iv'
 autocmd FileType html,css,eruby EmmetInstall
+
 " power vim plugin for rails
 Plugin 'tpope/vim-rails.git'
 " vim rails syntax complete, try ctrl+x ctrl+u
 " set completefunc=syntaxcomplete#Complete
-" quickly comment your code, try ,cc on selected line
-Plugin 'vim-scripts/The-NERD-Commenter'
+
 " indent guides
-let g:indent_guides_guide_size = 1
 Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_guide_size = 1
 " indent guides shortcut
 map <silent><F7>  <leader>ig
-
-" markdown support
 let g:indent_guides_guide_size = 1
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+" Plugin 'godlygeek/tabular'
+" Plugin 'plasticboy/vim-markdown'
 
 " file tree like something called IDE
 Plugin 'scrooloose/nerdtree'
-map <silent><F8> :NERDTree<CR>
+" map <silent><F8> :NERDTree<CR>
 map <leader>r :NERDTreeFind<cr>
 map <leader>e :NERDTreeToggle<cr>
 map <leader>y "+y<cr>
-map <leader>p "+p<cr>
+" map <leader>p "+p<cr>
 " coffeescript
-Plugin 'kchmck/vim-coffee-script'
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+" Plugin 'kchmck/vim-coffee-script'
+" autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+
 " basic dependence
 Plugin 'L9'
+
 " slim template support
-Plugin 'slim-template/vim-slim.git'
+" Plugin 'slim-template/vim-slim.git'
 " hack filetype for slim
-autocmd BufNewFile,BufRead *.slim set filetype=slim
-autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+" autocmd BufNewFile,BufRead *.slim set filetype=slim
+" autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 " quickly search file(s), use ctrl+p, F5 refresh
+
 Plugin 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -114,9 +133,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'isRuslan/vim-es6'
 
 " neocompletecache
-Plugin 'Shougo/neocomplcache'
-
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Plugin 'Shougo/neocomplcache'
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -126,28 +143,11 @@ let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-" inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+" inoremap <expr><leader><Space>  neocomplcache#close_popup()
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -159,21 +159,13 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " vim-powerline
 Plugin 'Lokaltog/vim-powerline'
-
 set laststatus=2
-
-" tComment
-Plugin 'vim-scripts/tComment'
 
 " ack
 Plugin 'mileszs/ack.vim'
-
 map <leader>f :Ack
-" tagbar
-" Plugin 'majutsushi/tagbar'
+map <leader>fc :Ack <C-R>0
 
-" let g:tagbar_width=35
-" let g:tagbar_autofocus=1
-" nmap <F9> :TagbarToggle<CR>
+Plugin 'vim-ruby/vim-ruby'
 
 call vundle#end()
