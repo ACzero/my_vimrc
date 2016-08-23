@@ -157,9 +157,29 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-" vim-powerline
-Plugin 'Lokaltog/vim-powerline'
+" vim-airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 set laststatus=2
+set noshowmode
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'luna'
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
 
 " ack
 Plugin 'mileszs/ack.vim'
@@ -167,5 +187,7 @@ map <leader>f :Ack
 map <leader>fc :Ack <C-R>0
 
 Plugin 'vim-ruby/vim-ruby'
+
+Plugin 'tpope/vim-commentary'
 
 call vundle#end()
