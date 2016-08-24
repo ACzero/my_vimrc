@@ -103,8 +103,8 @@ Plugin 'scrooloose/nerdtree'
 " map <silent><F8> :NERDTree<CR>
 map <leader>r :NERDTreeFind<cr>
 map <leader>e :NERDTreeToggle<cr>
-map <leader>y "+y<cr>
-" map <leader>p "+p<cr>
+" map <leader>y "+y<cr>
+map <leader>p "+p<cr>
 " coffeescript
 " Plugin 'kchmck/vim-coffee-script'
 " autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -133,7 +133,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'isRuslan/vim-es6'
 
 " neocompletecache
-" Plugin 'Shougo/neocomplcache'
+Plugin 'Shougo/neocomplcache'
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -163,6 +163,12 @@ Plugin 'vim-airline/vim-airline-themes'
 set laststatus=2
 set noshowmode
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
 let g:airline_theme = 'luna'
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
