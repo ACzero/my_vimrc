@@ -54,6 +54,10 @@ Plugin 'tpope/vim-sensible'
 
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+
+map <leader>s= i<space><esc>ysW=7lx2h
+map <leader>s- i<space><esc>ysW-7lx2h
+
 Plugin 'tpope/vim-dispatch'
 
 if has("gui_running")
