@@ -73,6 +73,8 @@ Plugin 'mileszs/ack.vim'
 map <leader>f :Ack
 map <leader>fc :Ack <C-R>0
 
+Plugin 'terryma/vim-multiple-cursors'
+
 Plugin 'Shougo/neocomplete'
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
