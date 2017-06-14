@@ -1,97 +1,171 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+filetype plugin indent on
+syntax on
+colorscheme solarized
 
-" set the runtime path to include Vundle and initialize
+set nocompatible
+set noswapfile
+
+" 1 tab to 2 space for ruby
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+
+" number line show
+set number
+
+"in order to switch between buffers with unsaved change
+set hidden
+
+" hightlight column and line
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
+
+" support css word with -
+autocmd FileType css,scss,slim,html,eruby,coffee,javascript setlocal iskeyword+=-
+autocmd Filetype python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+
+" vim 7.4 backspace fix
+set backspace=indent,eol,start
+set t_Co=256
+
+autocmd BufWritePre * :%s/\s\+$//e
+
 set rtp+=~/.vim/bundle/Vundle.vim
+
+let mapleader= ","
+
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'gmarik/Vundle.vim'
 
-Plugin 'Shougo/neocomplcache'
+" basic dependence
+Plugin 'L9'
+
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+map <leader>s= i<space><esc>ysW=7lx2h
+map <leader>s- i<space><esc>ysW-7lx2h
+Plugin 'tpope/vim-commentary'
+
+Plugin 'Lokaltog/vim-easymotion'
+
+Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_guide_size = 1
+let g:indent_guides_guide_size = 1
+map <silent><F7>  <leader>ig
 
 Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+map <leader>r :NERDTreeFind<cr>
+map <leader>e :NERDTreeToggle<cr>
+map <leader>p "+p<cr>
+
+Plugin 'kien/ctrlp.vim'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = '\v[\/]\.(DS_Store|git|hg|svn)|(optimized|compiled|node_modules|bower_compenents)$'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+map <c-o> :CtrlPBuffer<CR>
 
 Plugin 'mileszs/ack.vim'
+map <leader>f :Ack
+map <leader>fc :Ack <C-R>0
 
-Plugin 'tpope/vim-fugitive'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-syntax on
-syntax enable
-colorscheme molokai 
-
-set number
-set title
-
-set autoindent
-autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=80
-
-set backspace=indent,eol,start
-" my custom key-mappings
-map <S-j> 10j
-map <S-k> 10k
-
-map <S-h> :tabp<Enter>
-map <S-l> :tabn<Enter>
-
-" neocompletecache
-
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+Plugin 'Shougo/neocomplete'
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
+let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'vimshell' : $HOME.'/.vimshell_hist',
+  \ 'scheme' : $HOME.'/.gosh_completions'
+\ }
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:neocomplete#sources#omni#force_omni_input_patterns')
+  let g:neocomplete#sources#omni#force_omni_input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^.[:digit:] *\t]\%(\.\|->\)'
 
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-" NERDTreeTabs
+" vim-airline plugins, make vim look pretty
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+set laststatus=2
+set noshowmode
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline_theme = 'luna'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
 
-map <C-n> :NERDTreeTabsToggle<CR> 
+Plugin 'vim-ruby/vim-ruby'
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby compiler ruby
 
-" vim-fugitive
+Plugin 'tpope/vim-rails.git'
+" vim rails syntax complete, try ctrl+x ctrl+u
+set completefunc=syntaxcomplete#Complete
 
-autocmd QuickFixCmdPost *grep* cwindow
+call vundle#end()
