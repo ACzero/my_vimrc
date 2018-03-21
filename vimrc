@@ -36,6 +36,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 let mapleader= ","
 
+filetype off
+
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -63,9 +65,11 @@ map <leader>e :NERDTreeToggle<cr>
 map <leader>p "+p<cr>
 
 Plugin 'kien/ctrlp.vim'
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = '\v[\/]\.(DS_Store|git|hg|svn)|(optimized|compiled|node_modules|bower_compenents)$'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 map <c-o> :CtrlPBuffer<CR>
 
@@ -170,4 +174,8 @@ Plugin 'tpope/vim-rails.git'
 " vim rails syntax complete, try ctrl+x ctrl+u
 set completefunc=syntaxcomplete#Complete
 
+Plugin 'elixir-lang/vim-elixir'
+
 call vundle#end()
+
+filetype on
